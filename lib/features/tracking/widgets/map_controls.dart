@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:royal_app/core/constants/app_fonts_icons.dart';
 import 'package:royal_app/features/tracking/widgets/map_style.dart';
-
-// ── Single icon button ─────────────────────────────────────────────────────────
 
 class MapIconButton extends StatelessWidget {
   const MapIconButton({
@@ -14,10 +13,10 @@ class MapIconButton extends StatelessWidget {
     this.tooltip,
   });
 
-  final FaIconData icon;
+  final FaIconData   icon;
   final VoidCallback onTap;
-  final bool active;
-  final String? tooltip;
+  final bool         active;
+  final String?      tooltip;
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +24,13 @@ class MapIconButton extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        width: 40,
-        height: 40,
+        width: 40.w,
+        height: 40.w,
         decoration: BoxDecoration(
           color: active
               ? const Color(0xFFFF6B00).withValues(alpha: 0.9)
               : Colors.black.withValues(alpha: 0.82),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
             color: active ? const Color(0xFFFF6B00) : Colors.white12,
           ),
@@ -39,8 +38,8 @@ class MapIconButton extends StatelessWidget {
               ? [
                   BoxShadow(
                     color: const Color(0xFFFF6B00).withValues(alpha: 0.3),
-                    blurRadius: 10,
-                    spreadRadius: 1,
+                    blurRadius: 10.r,
+                    spreadRadius: 1.r,
                   ),
                 ]
               : [],
@@ -49,7 +48,7 @@ class MapIconButton extends StatelessWidget {
           child: FaIcon(
             icon,
             color: active ? Colors.white : Colors.white54,
-            size: 16,
+            size: 16.sp,
           ),
         ),
       ),
@@ -58,8 +57,6 @@ class MapIconButton extends StatelessWidget {
   }
 }
 
-// ── Map style picker button + bottom-sheet ─────────────────────────────────────
-
 class MapStyleButton extends StatelessWidget {
   const MapStyleButton({
     super.key,
@@ -67,8 +64,8 @@ class MapStyleButton extends StatelessWidget {
     required this.onChanged,
   });
 
-  final MapStyle current;
-  final ValueChanged<MapStyle> onChanged;
+  final MapStyle                current;
+  final ValueChanged<MapStyle>  onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +80,8 @@ class MapStyleButton extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       backgroundColor: const Color(0xFF111111),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
       builder: (_) => _MapStyleSheet(current: current, onChanged: onChanged),
     );
@@ -94,30 +91,30 @@ class MapStyleButton extends StatelessWidget {
 class _MapStyleSheet extends StatelessWidget {
   const _MapStyleSheet({required this.current, required this.onChanged});
 
-  final MapStyle current;
+  final MapStyle               current;
   final ValueChanged<MapStyle> onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
+      padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 32.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
             child: Container(
-              width: 36,
-              height: 3,
-              margin: const EdgeInsets.only(bottom: 16),
+              width: 36.w,
+              height: 3.h,
+              margin: EdgeInsets.only(bottom: 16.h),
               decoration: BoxDecoration(
                 color: Colors.white24,
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: BorderRadius.circular(2.r),
               ),
             ),
           ),
           Text('MAP STYLE', style: AppFonts.sectionHeader()),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Row(
             children: MapStyle.values.map((s) {
               final selected = s == current;
@@ -128,13 +125,13 @@ class _MapStyleSheet extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   child: Container(
-                    margin: const EdgeInsets.only(right: 8),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    margin: EdgeInsets.only(right: 8.w),
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
                     decoration: BoxDecoration(
                       color: selected
                           ? const Color(0xFFFF6B00).withValues(alpha: 0.15)
                           : const Color(0xFF1A1A1A),
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(14.r),
                       border: Border.all(
                         color: selected
                             ? const Color(0xFFFF6B00)
@@ -149,9 +146,9 @@ class _MapStyleSheet extends StatelessWidget {
                           color: selected
                               ? const Color(0xFFFF6B00)
                               : Colors.white38,
-                          size: 22,
+                          size: 22.sp,
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 8.h),
                         Text(
                           s.label,
                           style: AppFonts.caption(

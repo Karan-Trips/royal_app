@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:royal_app/core/constants/app_fonts_icons.dart';
 import 'package:royal_app/features/tracking/providers/tracking_provider.dart';
@@ -20,10 +21,10 @@ class SpeedHud extends StatelessWidget {
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
       decoration: BoxDecoration(
         color: Colors.black.withValues(alpha: 0.85),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
           color: isActive
               ? const Color(0xFFFF6B00).withValues(alpha: 0.5)
@@ -34,15 +35,14 @@ class SpeedHud extends StatelessWidget {
             color: isActive
                 ? const Color(0xFFFF6B00).withValues(alpha: 0.18)
                 : Colors.transparent,
-            blurRadius: 18,
-            spreadRadius: 2,
+            blurRadius: 18.r,
+            spreadRadius: 2.r,
           ),
         ],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Speed number — Rajdhani bold
           Text(
             speed.toStringAsFixed(0),
             style: AppFonts.hud(
@@ -51,14 +51,12 @@ class SpeedHud extends StatelessWidget {
             ),
           ),
           Text('km/h', style: AppFonts.caption(letterSpacing: 1.5)),
-
-          // Bearing badge
-          const SizedBox(height: 6),
+          SizedBox(height: 6.h),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
             decoration: BoxDecoration(
               color: const Color(0xFFFF6B00).withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               border: Border.all(
                 color: const Color(0xFFFF6B00).withValues(alpha: 0.3),
               ),
@@ -66,9 +64,9 @@ class SpeedHud extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const FaIcon(AppIcons.compass,
-                    color: Color(0xFFFF6B00), size: 9),
-                const SizedBox(width: 4),
+                FaIcon(AppIcons.compass,
+                    color: const Color(0xFFFF6B00), size: 9.sp),
+                SizedBox(width: 4.w),
                 Text(
                   bearing,
                   style: AppFonts.body(
@@ -81,22 +79,19 @@ class SpeedHud extends StatelessWidget {
               ],
             ),
           ),
-
-          // Max speed badge
           if (isActive && tracking.maxSpeedKmh > 0) ...[
-            const SizedBox(height: 5),
+            SizedBox(height: 5.h),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
               decoration: BoxDecoration(
                 color: Colors.white10,
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(6.r),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const FaIcon(AppIcons.maxSpeed,
-                      color: Colors.white38, size: 8),
-                  const SizedBox(width: 4),
+                  FaIcon(AppIcons.maxSpeed, color: Colors.white38, size: 8.sp),
+                  SizedBox(width: 4.w),
                   Text(
                     'MAX ${tracking.maxSpeedKmh.toStringAsFixed(0)}',
                     style: AppFonts.caption(letterSpacing: 0.5),

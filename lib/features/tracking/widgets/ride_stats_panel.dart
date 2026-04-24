@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:royal_app/core/constants/app_fonts_icons.dart';
 import 'package:royal_app/features/dashboard/providers/moto_provider.dart';
@@ -13,7 +14,7 @@ class RideStatsPanel extends StatelessWidget {
   });
 
   final TrackingState tracking;
-  final RideStats stats;
+  final RideStats     stats;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class RideStatsPanel extends StatelessWidget {
       duration: const Duration(milliseconds: 300),
       decoration: BoxDecoration(
         color: Colors.black.withValues(alpha: 0.92),
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
         border: Border(
           top: BorderSide(
             color: isTracking
@@ -37,8 +38,8 @@ class RideStatsPanel extends StatelessWidget {
             color: isTracking
                 ? const Color(0xFFFF6B00).withValues(alpha: 0.1)
                 : Colors.transparent,
-            blurRadius: 28,
-            spreadRadius: 4,
+            blurRadius: 28.r,
+            spreadRadius: 4.r,
             offset: const Offset(0, -4),
           ),
         ],
@@ -46,21 +47,18 @@ class RideStatsPanel extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Drag handle
           Container(
-            margin: const EdgeInsets.only(top: 10),
-            width: 36,
-            height: 3,
+            margin: EdgeInsets.only(top: 10.h),
+            width: 36.w,
+            height: 3.h,
             decoration: BoxDecoration(
               color: Colors.white12,
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: BorderRadius.circular(2.r),
             ),
           ),
-          const SizedBox(height: 14),
-
-          // Row 1
+          SizedBox(height: 14.h),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
+            padding: EdgeInsets.symmetric(horizontal: 14.w),
             child: Row(
               children: [
                 StatChip(
@@ -69,14 +67,14 @@ class RideStatsPanel extends StatelessWidget {
                   icon: AppIcons.distance,
                   color: const Color(0xFFFF6B00),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 StatChip(
                   label: 'DURATION',
                   value: tracking.elapsedFormatted,
                   icon: AppIcons.timer,
                   color: const Color(0xFF4FC3F7),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 StatChip(
                   label: 'AVG SPEED',
                   value: '${tracking.avgSpeedKmh.toStringAsFixed(1)} km/h',
@@ -86,12 +84,9 @@ class RideStatsPanel extends StatelessWidget {
               ],
             ),
           ),
-
-          const SizedBox(height: 8),
-
-          // Row 2
+          SizedBox(height: 8.h),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
+            padding: EdgeInsets.symmetric(horizontal: 14.w),
             child: Row(
               children: [
                 StatChip(
@@ -102,7 +97,7 @@ class RideStatsPanel extends StatelessWidget {
                   color: Colors.amberAccent,
                   flex: 2,
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 StatChip(
                   label: 'WALLET',
                   value: '₹${stats.fuelWallet.toStringAsFixed(0)}',
@@ -112,11 +107,9 @@ class RideStatsPanel extends StatelessWidget {
               ],
             ),
           ),
-
-          const SizedBox(height: 14),
-
+          SizedBox(height: 14.h),
           Padding(
-            padding: const EdgeInsets.fromLTRB(14, 0, 14, 24),
+            padding: EdgeInsets.fromLTRB(14.w, 0, 14.w, 24.h),
             child: RideFab(tracking: tracking),
           ),
         ],
@@ -124,8 +117,6 @@ class RideStatsPanel extends StatelessWidget {
     );
   }
 }
-
-// ── Stat Chip ──────────────────────────────────────────────────────────────────
 
 class StatChip extends StatelessWidget {
   const StatChip({
@@ -137,33 +128,33 @@ class StatChip extends StatelessWidget {
     this.flex = 1,
   });
 
-  final String label;
-  final String value;
+  final String     label;
+  final String     value;
   final FaIconData icon;
-  final Color color;
-  final int flex;
+  final Color      color;
+  final int        flex;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       flex: flex,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 9.h),
         decoration: BoxDecoration(
           color: color.withValues(alpha: 0.07),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: color.withValues(alpha: 0.22)),
         ),
         child: Row(
           children: [
-            FaIcon(icon, color: color, size: 12),
-            const SizedBox(width: 6),
+            FaIcon(icon, color: color, size: 12.sp),
+            SizedBox(width: 6.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(label, style: AppFonts.caption(letterSpacing: 0.5)),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2.h),
                   Text(
                     value,
                     style: AppFonts.body(

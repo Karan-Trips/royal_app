@@ -22,6 +22,7 @@ class TrackingState {
     this.maxSpeedKmh = 0.0,
     this.elapsedSeconds = 0,
     this.heading = 0.0,
+    this.accuracy = 0.0,
     this.isBackground = false,
   });
 
@@ -33,6 +34,7 @@ class TrackingState {
   final double       maxSpeedKmh;
   final int          elapsedSeconds;
   final double       heading;
+  final double       accuracy;   // GPS accuracy in metres
   final bool         isBackground;
 
   double get distanceKm {
@@ -67,6 +69,7 @@ class TrackingState {
     double?       maxSpeedKmh,
     int?          elapsedSeconds,
     double?       heading,
+    double?       accuracy,
     bool?         isBackground,
   }) =>
       TrackingState(
@@ -78,6 +81,7 @@ class TrackingState {
         maxSpeedKmh:     maxSpeedKmh     ?? this.maxSpeedKmh,
         elapsedSeconds:  elapsedSeconds  ?? this.elapsedSeconds,
         heading:         heading         ?? this.heading,
+        accuracy:        accuracy        ?? this.accuracy,
         isBackground:    isBackground    ?? this.isBackground,
       );
 }
@@ -178,10 +182,11 @@ class TrackingNotifier extends _$TrackingNotifier {
       // While foreground, push directly — skip background isolate overhead.
       if (!state.isBackground) {
         _handleUpdate(
-          lat:     pos.latitude,
-          lng:     pos.longitude,
-          speedMs: pos.speed,
-          heading: pos.heading,
+          lat:      pos.latitude,
+          lng:      pos.longitude,
+          speedMs:  pos.speed,
+          heading:  pos.heading,
+          accuracy: pos.accuracy,
         );
       }
     });
@@ -232,6 +237,7 @@ class TrackingNotifier extends _$TrackingNotifier {
     required double lng,
     required double speedMs,
     required double heading,
+    double accuracy = 0.0,
   }) {
     final point     = LatLng(lat, lng);
     final newPoints = [...state.points, point];
@@ -262,6 +268,7 @@ class TrackingNotifier extends _$TrackingNotifier {
       currentSpeedKmh: speedKmh,
       maxSpeedKmh:     maxSpeed,
       heading:         heading < 0 ? 0 : heading % 360,
+      accuracy:        accuracy.clamp(0.0, 500.0),
     );
   }
 

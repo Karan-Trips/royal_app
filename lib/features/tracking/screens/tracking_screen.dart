@@ -142,7 +142,7 @@ class _TrackingScreenState extends ConsumerState<TrackingScreen>
                 tempAsync.when(
                   data: (temp) => isHeatWarning(temp)
                       ? TrackingBanner(
-                          color: Colors.red.shade900.withValues(alpha: 0.92),
+                          color: Colors.red.shade900.withValues(alpha: 0.5),
                           icon: AppIcons.warning,
                           iconColor: Colors.white,
                           text: 'tracking.heat_alert'.tr(

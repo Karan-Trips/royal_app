@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:royal_app/core/constants/app_constants.dart';
 import 'package:royal_app/core/constants/app_fonts_icons.dart';
@@ -24,7 +25,7 @@ class SettingsScreen extends ConsumerWidget {
         title: Text('settings.title'.tr()),
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: EdgeInsets.symmetric(vertical: 12.h),
         children: [
 
           // ── Language ──────────────────────────────────────────────────
@@ -54,7 +55,7 @@ class SettingsScreen extends ConsumerWidget {
             secondary: FaIcon(
               isDark ? AppIcons.darkMode : AppIcons.lightMode,
               color: const Color(0xFFFF6B00),
-              size: 18,
+              size: 18.sp,
             ),
             title: Text(
               isDark
@@ -75,7 +76,7 @@ class SettingsScreen extends ConsumerWidget {
           // ── Fuel Wallet ───────────────────────────────────────────────
           _SectionHeader(label: 'settings.fuel_wallet'.tr()),
           ListTile(
-            leading: const FaIcon(AppIcons.wallet, color: Color(0xFFFFD740), size: 18),
+            leading: FaIcon(AppIcons.wallet, color: const Color(0xFFFFD740), size: 18.sp),
             title: Text('settings.wallet_balance'.tr(), style: AppFonts.body(size: 14)),
             trailing: Text(
               '₹${stats.fuelWallet.toStringAsFixed(0)}',
@@ -87,19 +88,19 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           ListTile(
-            leading: const FaIcon(AppIcons.fuel, color: Color(0xFF69F0AE), size: 18),
+            leading: FaIcon(AppIcons.fuel, color: const Color(0xFF69F0AE), size: 18.sp),
             title: Text('settings.topup_fuel'.tr(), style: AppFonts.body(size: 14)),
-            trailing: const FaIcon(AppIcons.add, color: Color(0xFFFF6B00), size: 14),
+            trailing: FaIcon(AppIcons.add, color: const Color(0xFFFF6B00), size: 14.sp),
             onTap: () => _showTopUpDialog(context, ref),
           ),
           ListTile(
-            leading: const FaIcon(AppIcons.timer, color: Color(0xFF4FC3F7), size: 18),
+            leading: FaIcon(AppIcons.timer, color: const Color(0xFF4FC3F7), size: 18.sp),
             title: Text('settings.reset_day'.tr(), style: AppFonts.body(size: 14)),
             subtitle: Text(
               'settings.reset_day_sub'.tr(),
               style: AppFonts.caption(size: 11, color: cs.onSurface.withValues(alpha: 0.5)),
             ),
-            trailing: const FaIcon(AppIcons.close, color: Colors.redAccent, size: 14),
+            trailing: FaIcon(AppIcons.close, color: Colors.redAccent, size: 14.sp),
             onTap: () => _confirmResetDay(context, ref),
           ),
 
@@ -131,7 +132,7 @@ class SettingsScreen extends ConsumerWidget {
           // ── About ─────────────────────────────────────────────────────
           _SectionHeader(label: 'settings.about'.tr()),
           ListTile(
-            leading: const FaIcon(AppIcons.motorcycle, color: Color(0xFFFF6B00), size: 18),
+            leading: FaIcon(AppIcons.motorcycle, color: const Color(0xFFFF6B00), size: 18.sp),
             title: Text('settings.bike_name'.tr(), style: AppFonts.body(size: 14)),
             trailing: Text(
               AppConstants.bikeVariant,
@@ -139,7 +140,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           ListTile(
-            leading: const FaIcon(AppIcons.info, color: Color(0xFFFF6B00), size: 18),
+            leading: FaIcon(AppIcons.info, color: const Color(0xFFFF6B00), size: 18.sp),
             title: Text('settings.app_version'.tr(), style: AppFonts.body(size: 14)),
             trailing: Text(
               'settings.version_value'.tr(),
@@ -147,7 +148,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           ListTile(
-            leading: const FaIcon(AppIcons.language, color: Color(0xFFFF6B00), size: 18),
+            leading: FaIcon(AppIcons.language, color: const Color(0xFFFF6B00), size: 18.sp),
             title: Text('settings.location'.tr(), style: AppFonts.body(size: 14)),
             trailing: Text(
               'Ahmedabad, GJ',
@@ -232,7 +233,7 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 4.h),
       child: Text(label.toUpperCase(), style: AppFonts.sectionHeader()),
     );
   }
@@ -257,7 +258,7 @@ class _LanguageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        radius: 14,
+        radius: 14.r,
         backgroundColor:
             selected ? const Color(0xFFFF6B00) : Colors.transparent,
         child: Text(
@@ -272,7 +273,7 @@ class _LanguageTile extends StatelessWidget {
       ),
       title: Text(label, style: AppFonts.body(size: 14)),
       trailing: selected
-          ? const FaIcon(AppIcons.check, color: Color(0xFFFF6B00), size: 16)
+          ? FaIcon(AppIcons.check, color: const Color(0xFFFF6B00), size: 16.sp)
           : null,
       onTap: onTap,
     );
@@ -297,7 +298,7 @@ class _StatRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: FaIcon(icon, color: color, size: 18),
+      leading: FaIcon(icon, color: color, size: 18.sp),
       title: Text(label, style: AppFonts.body(size: 14)),
       trailing: Text(
         value,

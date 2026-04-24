@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:royal_app/core/providers/locale_provider.dart';
 import 'package:royal_app/core/services/background_location_service.dart';
 import 'package:royal_app/core/services/hive_service.dart';
@@ -32,17 +33,21 @@ class MotoStackApp extends ConsumerWidget {
     final themeMode = ref.watch(themeNotifierProvider);
     final locale = ref.watch(localeNotifierProvider);
 
-    return MaterialApp(
-      title: 'MotoStack',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: themeMode,
-      // easy_localization hooks
-      locale: locale,
-      supportedLocales: context.supportedLocales,
-      localizationsDelegates: context.localizationDelegates,
-      home: const GateScreen(),
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, _) => MaterialApp(
+        title: 'MotoStack',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
+        themeMode: themeMode,
+        locale: locale,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
+        home: const GateScreen(),
+      ),
     );
   }
 }

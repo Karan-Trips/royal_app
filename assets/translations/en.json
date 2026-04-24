@@ -30,7 +30,7 @@
     "km_today": "{km} km today",
     "start_ride": "Start Ride",
     "stop_ride": "Stop Ride",
-    "heat_alert": "⚠️ Ahmedabad heat alert: {temp}°C — Stay hydrated!",
+    "heat_alert": "Ahmedabad heat alert: {temp}°C — Stay hydrated!",
     "fuel_panel_used": "Fuel Used",
     "fuel_panel_cost": "Ride Cost",
     "fuel_panel_litres": "{litres} L",
