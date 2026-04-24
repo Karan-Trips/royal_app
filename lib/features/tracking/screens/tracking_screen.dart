@@ -32,13 +32,13 @@ class _TrackingScreenState extends ConsumerState<TrackingScreen>
 
   // ── State ──────────────────────────────────────────────────────────────────
   final _mapController = MapController();
-  MapStyle _mapStyle   = MapStyle.dark;
-  bool _followUser     = true;
+  MapStyle _mapStyle = MapStyle.dark;
+  bool _followUser = true;
   late AppLifecycleListener _lifecycleListener;
 
   // ── Pulse animation for position marker ───────────────────────────────────
   late final AnimationController _pulseCtrl;
-  late final Animation<double>   _pulseAnim;
+  late final Animation<double> _pulseAnim;
 
   @override
   void initState() {
@@ -47,15 +47,20 @@ class _TrackingScreenState extends ConsumerState<TrackingScreen>
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     )..repeat(reverse: true);
-    _pulseAnim = Tween(begin: 0.5, end: 1.0).animate(
-      CurvedAnimation(parent: _pulseCtrl, curve: Curves.easeInOut),
-    );
+    _pulseAnim = Tween(
+      begin: 0.5,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _pulseCtrl, curve: Curves.easeInOut));
     // Notify provider when app goes background/foreground
     _lifecycleListener = AppLifecycleListener(
-      onHide:   () => ref.read(trackingNotifierProvider.notifier).onAppBackground(),
-      onShow:   () => ref.read(trackingNotifierProvider.notifier).onAppForeground(),
-      onPause:  () => ref.read(trackingNotifierProvider.notifier).onAppBackground(),
-      onResume: () => ref.read(trackingNotifierProvider.notifier).onAppForeground(),
+      onHide: () =>
+          ref.read(trackingNotifierProvider.notifier).onAppBackground(),
+      onShow: () =>
+          ref.read(trackingNotifierProvider.notifier).onAppForeground(),
+      onPause: () =>
+          ref.read(trackingNotifierProvider.notifier).onAppBackground(),
+      onResume: () =>
+          ref.read(trackingNotifierProvider.notifier).onAppForeground(),
     );
   }
 
@@ -75,9 +80,9 @@ class _TrackingScreenState extends ConsumerState<TrackingScreen>
 
   @override
   Widget build(BuildContext context) {
-    final tracking    = ref.watch(trackingNotifierProvider);
-    final stats       = ref.watch(rideStatsNotifierProvider);
-    final tempAsync   = ref.watch(ahmedabadTempProvider);
+    final tracking = ref.watch(trackingNotifierProvider);
+    final stats = ref.watch(rideStatsNotifierProvider);
+    final tempAsync = ref.watch(ahmedabadTempProvider);
     final onlineAsync = ref.watch(isOnlineProvider);
 
     // Follow + bearing-lock whenever position or heading changes
@@ -166,9 +171,7 @@ class _TrackingScreenState extends ConsumerState<TrackingScreen>
             child: Column(
               children: [
                 MapIconButton(
-                  icon: _followUser
-                      ? AppIcons.navigation
-                      : AppIcons.locate,
+                  icon: _followUser ? AppIcons.navigation : AppIcons.locate,
                   active: _followUser,
                   tooltip: _followUser ? 'Bearing locked' : 'Re-center',
                   onTap: () {
@@ -207,15 +210,11 @@ class _TrackingScreenState extends ConsumerState<TrackingScreen>
 
 // ── AppBar ─────────────────────────────────────────────────────────────────────
 
-class _TrackingAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
-  const _TrackingAppBar({
-    required this.tracking,
-    required this.onRecenter,
-  });
+class _TrackingAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _TrackingAppBar({required this.tracking, required this.onRecenter});
 
   final TrackingState tracking;
-  final VoidCallback  onRecenter;
+  final VoidCallback onRecenter;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -250,8 +249,11 @@ class _TrackingAppBar extends StatelessWidget
           )
         else
           IconButton(
-            icon: const FaIcon(AppIcons.locate,
-                color: Color(0xFFFF6B00), size: 16),
+            icon: const FaIcon(
+              AppIcons.locate,
+              color: Color(0xFFFF6B00),
+              size: 16,
+            ),
             onPressed: onRecenter,
           ),
       ],
