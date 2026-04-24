@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:royal_app/core/constants/app_constants.dart';
+import 'package:royal_app/core/providers/app_gate_provider.dart';
 import 'package:royal_app/core/services/hive_service.dart';
 import 'package:royal_app/core/utils/weather_helper.dart';
 
@@ -85,7 +86,13 @@ class IgnitionNotifier extends _$IgnitionNotifier {
 // ── Weather Provider ──────────────────────────────────────────────────────────
 
 @riverpod
-Future<double> ahmedabadTemp(Ref ref) => fetchAhmedabadTemp();
+Future<double> ahmedabadTemp(Ref ref) {
+  final position = ref.watch(appGateNotifierProvider).position;
+  return fetchAhmedabadTemp(
+    latitude:  position?.latitude  ?? AppConstants.ahmedabadLat,
+    longitude: position?.longitude ?? AppConstants.ahmedabadLng,
+  );
+}
 
 // ── Daily History Provider (for chart) ───────────────────────────────────────
 
