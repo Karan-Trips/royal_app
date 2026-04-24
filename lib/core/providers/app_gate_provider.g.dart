@@ -6,7 +6,7 @@ part of 'app_gate_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appGateNotifierHash() => r'90271c3e193e52af9e95135b5c0b6677c0429081';
+String _$appGateNotifierHash() => r'2f62d4d1711efdc4f3c12b47a6831855f2a15150';
 
 /// See also [AppGateNotifier].
 @ProviderFor(AppGateNotifier)

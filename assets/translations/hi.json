@@ -82,5 +82,22 @@
     "location": "स्थान",
     "app_version": "ऐप संस्करण",
     "version_value": "1.0.0"
+  },
+
+  "history": {
+    "title": "राइड इतिहास",
+    "empty": "अभी तक कोई राइड सेव नहीं हुई",
+    "empty_sub": "राइड पूरी करें तो यहां दिखेगी",
+    "replay": "देखने के लिए टैप करें",
+    "distance": "दूरी",
+    "duration": "समय",
+    "cost": "लागत",
+    "details": "राइड विवरण",
+    "max_speed": "अधिकतम गति",
+    "avg_speed": "औसत गति",
+    "fuel_used": "ईंधन उपयोग",
+    "points": "GPS बिंदु",
+    "start": "शुरुआत",
+    "end": "अंत"
   }
 }

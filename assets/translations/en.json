@@ -82,5 +82,22 @@
     "location": "Location",
     "app_version": "App Version",
     "version_value": "1.0.0"
+  },
+
+  "history": {
+    "title": "RIDE HISTORY",
+    "empty": "No rides saved yet",
+    "empty_sub": "Complete a ride to see it here",
+    "replay": "Tap to replay",
+    "distance": "Distance",
+    "duration": "Duration",
+    "cost": "Cost",
+    "details": "RIDE DETAILS",
+    "max_speed": "Max Speed",
+    "avg_speed": "Avg Speed",
+    "fuel_used": "Fuel Used",
+    "points": "GPS Points",
+    "start": "Start Point",
+    "end": "End Point"
   }
 }
