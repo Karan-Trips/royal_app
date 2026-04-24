@@ -159,7 +159,7 @@ class _TrackingScreenState extends ConsumerState<TrackingScreen>
 
           // ── 3. Speed HUD (top-left) ───────────────────────────────────
           Positioned(
-            top: MediaQuery.of(context).padding.top + kToolbarHeight + 12,
+            top: MediaQuery.of(context).padding.top + kToolbarHeight + 50,
             left: 16,
             child: SpeedHud(tracking: tracking),
           ),
