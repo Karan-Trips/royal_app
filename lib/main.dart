@@ -16,7 +16,11 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await HiveService.instance.init();
-  await BackgroundLocationService.instance.init();
+  try {
+    await BackgroundLocationService.instance.init();
+  } catch (_) {
+    // Background location not supported on this device/simulator — safe to ignore.
+  }
 
   runApp(
     EasyLocalization(
