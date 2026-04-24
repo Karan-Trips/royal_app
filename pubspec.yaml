@@ -1,0 +1,66 @@
+name: royal_app
+description: "MotoStack - Royal Enfield Meteor 350 Ride Tracker"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # State Management
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # Map & Location
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  geolocator: ^13.0.2
+  background_location_tracker: 1.6.1
+
+  # 3D Model
+  flutter_3d_controller: ^2.3.0
+
+  # Animations (OpenContainer)
+  animations: ^2.0.11
+
+  # HTTP for weather
+  http: ^1.2.2
+
+  # Biometric auth
+  local_auth: ^2.3.0
+
+  # Localization
+  easy_localization: ^3.0.7
+
+  # Local persistence
+  hive_flutter: ^1.1.0
+
+  # Connectivity
+  connectivity_plus: ^6.1.4
+
+  # Charts
+  fl_chart: ^0.70.2
+
+  # Fonts & Icons
+  google_fonts: ^8.0.2 
+  font_awesome_flutter: ^11.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  riverpod_generator: ^2.6.2
+  build_runner: ^2.4.13
+  custom_lint: ^0.7.5
+  riverpod_lint: ^2.6.2
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/models/
+    - assets/images/
+    - assets/translations/

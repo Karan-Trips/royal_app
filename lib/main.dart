@@ -1,0 +1,48 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:royal_app/core/providers/locale_provider.dart';
+import 'package:royal_app/core/services/background_location_service.dart';
+import 'package:royal_app/core/services/hive_service.dart';
+import 'package:royal_app/core/theme/app_theme.dart';
+import 'package:royal_app/core/theme/theme_provider.dart';
+import 'package:royal_app/features/gate/screens/gate_screen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  await HiveService.instance.init();
+  await BackgroundLocationService.instance.init(); // register bg callback
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('hi')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      child: const ProviderScope(child: MotoStackApp()),
+    ),
+  );
+}
+
+class MotoStackApp extends ConsumerWidget {
+  const MotoStackApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeNotifierProvider);
+    final locale = ref.watch(localeNotifierProvider);
+
+    return MaterialApp(
+      title: 'MotoStack',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: themeMode,
+      // easy_localization hooks
+      locale: locale,
+      supportedLocales: context.supportedLocales,
+      localizationsDelegates: context.localizationDelegates,
+      home: const GateScreen(),
+    );
+  }
+}

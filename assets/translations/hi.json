@@ -1,0 +1,86 @@
+{
+  "app_name": "मोटोस्टैक",
+  "bike_subtitle": "रॉयल एनफील्ड मेटियर 350 सुपरनोवा",
+
+  "gate": {
+    "verifying": "पहचान सत्यापित हो रही है…",
+    "locating": "आपका स्थान प्राप्त हो रहा है…",
+    "auth_failed": "प्रमाणीकरण विफल हुआ।",
+    "location_denied": "स्थान की अनुमति अस्वीकृत।",
+    "authenticate": "प्रमाणित करें",
+    "retry_location": "स्थान पुनः प्रयास करें"
+  },
+
+  "dashboard": {
+    "today": "आज",
+    "total": "कुल",
+    "fuel_wallet": "वॉलेट",
+    "fuel_used": "ईंधन उपयोग",
+    "petrol_used": "{litres} ली",
+    "fuel_cost": "₹{cost}",
+    "daily_goal": "दैनिक लक्ष्य  {percent}%  (12 किमी)",
+    "ignition": "इग्निशन",
+    "settings": "सेटिंग्स",
+    "balance": "बैलेंस",
+    "mileage": "माइलेज"
+  },
+
+  "tracking": {
+    "title": "लाइव ट्रैकिंग",
+    "km_today": "{km} किमी आज",
+    "start_ride": "राइड शुरू करें",
+    "stop_ride": "राइड रोकें",
+    "heat_alert": "⚠️ अहमदाबाद गर्मी चेतावनी: {temp}°C — हाइड्रेटेड रहें!",
+    "fuel_panel_used": "ईंधन उपयोग",
+    "fuel_panel_cost": "राइड लागत",
+    "fuel_panel_litres": "{litres} ली",
+    "fuel_panel_rupees": "₹{cost}"
+  },
+
+  "mileage": {
+    "title": "माइलेज कैलकुलेटर",
+    "avg_mileage": "औसत माइलेज",
+    "factory_claim": "फैक्ट्री: {km} किमी/ली",
+    "total_litres": "कुल लीटर",
+    "total_cost": "कुल खर्च",
+    "total_km": "कुल किमी",
+    "log_fillup": "फिल-अप दर्ज करें",
+    "litres_filled": "भरे गए लीटर",
+    "km_driven": "पिछले फिल से किमी",
+    "price_per_litre": "प्रति लीटर कीमत",
+    "calculate": "सेव करें और गणना करें",
+    "history": "फिल-अप इतिहास",
+    "entry_saved": "फिल-अप सेव हुआ!"
+  },
+
+  "settings": {
+    "title": "सेटिंग्स",
+    "language": "भाषा",
+    "english": "English",
+    "hindi": "हिंदी",
+    "theme": "थीम",
+    "dark_mode": "डार्क मोड",
+    "light_mode": "लाइट मोड",
+    "fuel_wallet": "ईंधन वॉलेट",
+    "wallet_balance": "वर्तमान बैलेंस",
+    "topup_fuel": "वॉलेट टॉप अप",
+    "topup_title": "ईंधन बजट जोड़ें",
+    "topup_hint": "₹ में राशि दर्ज करें",
+    "reset_day": "आज की राइड रीसेट करें",
+    "reset_day_sub": "आज का दूरी काउंटर साफ करता है",
+    "reset_confirm_title": "आज रीसेट करें?",
+    "reset_confirm_body": "इससे आज की दूरी साफ होगी। कुल दूरी सुरक्षित रहेगी।",
+    "cancel": "रद्द करें",
+    "add": "जोड़ें",
+    "reset": "रीसेट",
+    "ride_stats": "राइड आंकड़े",
+    "total_distance": "कुल दूरी",
+    "cost_per_km": "प्रति किमी लागत",
+    "daily_goal": "दैनिक लक्ष्य",
+    "about": "अबाउट",
+    "bike_name": "बाइक",
+    "location": "स्थान",
+    "app_version": "ऐप संस्करण",
+    "version_value": "1.0.0"
+  }
+}

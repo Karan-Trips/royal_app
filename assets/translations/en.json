@@ -1,0 +1,86 @@
+{
+  "app_name": "MotoStack",
+  "bike_subtitle": "Royal Enfield Meteor 350 Supernova",
+
+  "gate": {
+    "verifying": "Verifying identity…",
+    "locating": "Getting your location…",
+    "auth_failed": "Authentication failed.",
+    "location_denied": "Location access denied.",
+    "authenticate": "Authenticate",
+    "retry_location": "Retry Location"
+  },
+
+  "dashboard": {
+    "today": "Today",
+    "total": "Total",
+    "fuel_wallet": "Wallet",
+    "fuel_used": "Fuel Used",
+    "petrol_used": "{litres} L",
+    "fuel_cost": "₹{cost}",
+    "daily_goal": "Daily Goal  {percent}%  (12 km)",
+    "ignition": "IGNITION",
+    "settings": "Settings",
+    "balance": "Balance",
+    "mileage": "Mileage"
+  },
+
+  "tracking": {
+    "title": "Live Tracking",
+    "km_today": "{km} km today",
+    "start_ride": "Start Ride",
+    "stop_ride": "Stop Ride",
+    "heat_alert": "⚠️ Ahmedabad heat alert: {temp}°C — Stay hydrated!",
+    "fuel_panel_used": "Fuel Used",
+    "fuel_panel_cost": "Ride Cost",
+    "fuel_panel_litres": "{litres} L",
+    "fuel_panel_rupees": "₹{cost}"
+  },
+
+  "mileage": {
+    "title": "Mileage Calculator",
+    "avg_mileage": "Average Mileage",
+    "factory_claim": "Factory: {km} km/l",
+    "total_litres": "Total Litres",
+    "total_cost": "Total Spent",
+    "total_km": "Total KM",
+    "log_fillup": "Log a Fill-Up",
+    "litres_filled": "Litres Filled",
+    "km_driven": "KM Since Last Fill",
+    "price_per_litre": "Price per Litre",
+    "calculate": "Save & Calculate",
+    "history": "Fill-Up History",
+    "entry_saved": "Fill-up saved!"
+  },
+
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "english": "English",
+    "hindi": "हिंदी",
+    "theme": "Theme",
+    "dark_mode": "Dark Mode",
+    "light_mode": "Light Mode",
+    "fuel_wallet": "Fuel Wallet",
+    "wallet_balance": "Current Balance",
+    "topup_fuel": "Top Up Wallet",
+    "topup_title": "Add Fuel Budget",
+    "topup_hint": "Enter amount in ₹",
+    "reset_day": "Reset Today's Ride",
+    "reset_day_sub": "Clears today's distance counter",
+    "reset_confirm_title": "Reset Today?",
+    "reset_confirm_body": "This will clear today's distance. Total distance is kept.",
+    "cancel": "Cancel",
+    "add": "Add",
+    "reset": "Reset",
+    "ride_stats": "Ride Stats",
+    "total_distance": "Total Distance",
+    "cost_per_km": "Cost per km",
+    "daily_goal": "Daily Goal",
+    "about": "About",
+    "bike_name": "Bike",
+    "location": "Location",
+    "app_version": "App Version",
+    "version_value": "1.0.0"
+  }
+}
