@@ -74,27 +74,31 @@ class AppGateNotifier extends _$AppGateNotifier {
     );
 
     switch (result) {
-      case BiometricSuccess():
+      case AuthResult.success:
         break; // continue to GPS
 
-      case BiometricNotAvailable(:final reason):
+      case AuthResult.notAvailable:
+        // No biometrics on device — skip straight to GPS.
+        break;
+
+      case AuthResult.cancelled:
         state = state.copyWith(
           status: GateStatus.authFailed,
-          errorMessage: reason,
+          errorMessage: 'Authentication cancelled. Tap to try again.',
         );
         return;
 
-      case BiometricFailure(:final reason):
+      case AuthResult.lockedOut:
         state = state.copyWith(
           status: GateStatus.authFailed,
-          errorMessage: reason,
+          errorMessage: 'Too many failed attempts. Please try again later.',
         );
         return;
 
-      case BiometricError(:final message):
+      case AuthResult.error:
         state = state.copyWith(
           status: GateStatus.authFailed,
-          errorMessage: message,
+          errorMessage: 'Authentication error. Please try again.',
         );
         return;
     }
