@@ -117,7 +117,7 @@ class _TrackingScreenState extends ConsumerState<TrackingScreen>
 
           // ── 2. Offline + heat banners ─────────────────────────────────
           Positioned(
-            top: kToolbarHeight + 44,
+            top: MediaQuery.of(context).padding.top + kToolbarHeight,
             left: 0,
             right: 0,
             child: Column(
@@ -154,14 +154,14 @@ class _TrackingScreenState extends ConsumerState<TrackingScreen>
 
           // ── 3. Speed HUD (top-left) ───────────────────────────────────
           Positioned(
-            top: kToolbarHeight + 56,
+            top: MediaQuery.of(context).padding.top + kToolbarHeight + 12,
             left: 16,
             child: SpeedHud(tracking: tracking),
           ),
 
           // ── 4. Map controls (top-right) ───────────────────────────────
           Positioned(
-            top: kToolbarHeight + 56,
+            top: MediaQuery.of(context).padding.top + kToolbarHeight + 12,
             right: 12,
             child: Column(
               children: [
