@@ -7,17 +7,12 @@ import 'package:royal_app/features/history/domain/ride_entity.dart';
 
 part 'history_provider.g.dart';
 
-// ── Ride History ──────────────────────────────────────────────────────────────
+// ── Ride History (real-time Firestore stream) ─────────────────────────────────
 
 @riverpod
 class RideHistoryNotifier extends _$RideHistoryNotifier {
   @override
-  Future<List<RideEntity>> build() => RideRepository.instance.fetchRides();
-
-  Future<void> refresh() async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(RideRepository.instance.fetchRides);
-  }
+  Stream<List<RideEntity>> build() => RideRepository.instance.watchRides();
 
   Future<void> saveAndRefresh({
     required List<LatLng> points,
@@ -26,17 +21,16 @@ class RideHistoryNotifier extends _$RideHistoryNotifier {
     required int durationSeconds,
     required double maxSpeedKmh,
     required double avgSpeedKmh,
-  }) async {
-    await RideRepository.instance.saveRide(
-      points: points,
-      distanceKm: distanceKm,
-      cost: cost,
-      durationSeconds: durationSeconds,
-      maxSpeedKmh: maxSpeedKmh,
-      avgSpeedKmh: avgSpeedKmh,
-    );
-    await refresh();
-  }
+  }) =>
+      RideRepository.instance.saveRide(
+        points: points,
+        distanceKm: distanceKm,
+        cost: cost,
+        durationSeconds: durationSeconds,
+        maxSpeedKmh: maxSpeedKmh,
+        avgSpeedKmh: avgSpeedKmh,
+      );
+  // Stream auto-updates — no manual refresh needed.
 }
 
 // ── Bike Color ────────────────────────────────────────────────────────────────

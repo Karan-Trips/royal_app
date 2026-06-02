@@ -13,7 +13,6 @@ import 'package:royal_app/core/utils/weather_helper.dart';
 import 'package:go_router/go_router.dart';
 import 'package:royal_app/features/dashboard/presentation/providers/moto_provider.dart';
 import 'package:royal_app/features/history/presentation/providers/history_provider.dart';
-import 'package:royal_app/features/tracking/presentation/providers/tracking_provider.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -120,23 +119,6 @@ class DashboardScreen extends ConsumerWidget {
                             await HapticFeedback.heavyImpact();
                             if (!context.mounted) return;
                             await context.pushNamed('tracking');
-                            // Save ride on return from tracking
-                            if (!context.mounted) return;
-                            final tracking = ref.read(trackingNotifierProvider);
-                            if (tracking.points.length >= 2) {
-                              await ref
-                                  .read(rideHistoryNotifierProvider.notifier)
-                                  .saveAndRefresh(
-                                    points: tracking.points,
-                                    distanceKm: tracking.distanceKm,
-                                    cost:
-                                        tracking.distanceKm *
-                                        AppConstants.costPerKm,
-                                    durationSeconds: tracking.elapsedSeconds,
-                                    maxSpeedKmh: tracking.maxSpeedKmh,
-                                    avgSpeedKmh: tracking.avgSpeedKmh,
-                                  );
-                            }
                           },
                         ),
 

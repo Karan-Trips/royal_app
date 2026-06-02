@@ -1,12 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:royal_app/core/constants/app_constants.dart';
 import 'package:royal_app/core/providers/app_gate_provider.dart';
 import 'package:royal_app/core/services/background_location_service.dart';
 import 'package:royal_app/core/services/hive_service.dart';
 import 'package:royal_app/features/dashboard/presentation/providers/moto_provider.dart';
+import 'package:royal_app/features/history/data/ride_repository.dart';
 import 'package:royal_app/features/tracking/domain/tracking_entity.dart';
 
 part 'tracking_provider.g.dart';
@@ -141,11 +144,54 @@ class TrackingNotifier extends _$TrackingNotifier {
   Future<void> stopTracking() async {
     await _bgService.stopTracking();
     _cleanup();
+
+    final snapshot = state;
+
     state = state.copyWith(
       isTracking:      false,
       currentSpeedKmh: 0,
       isBackground:    false,
     );
+
+    // Save to Firestore — minimum 2 points required
+    final pointsToSave = snapshot.points.isNotEmpty
+        ? snapshot.points
+        : () {
+            final flat = HiveService.instance.savedPoints;
+            final pts = <LatLng>[];
+            for (var i = 0; i + 1 < flat.length; i += 2) {
+              pts.add(LatLng(flat[i], flat[i + 1]));
+            }
+            return pts;
+          }();
+
+    // If only 1 or 0 points, duplicate the last point so we always have 2
+    final savePoints = pointsToSave.length >= 2
+        ? pointsToSave
+        : pointsToSave.isNotEmpty
+            ? [pointsToSave.first, pointsToSave.first]
+            : snapshot.currentPosition != null
+                ? [snapshot.currentPosition!, snapshot.currentPosition!]
+                : null;
+
+    if (savePoints != null) {
+      try {
+        await RideRepository.instance.saveRide(
+          points:          savePoints,
+          distanceKm:      snapshot.distanceKm,
+          cost:            snapshot.distanceKm * AppConstants.costPerKm,
+          durationSeconds: snapshot.elapsedSeconds,
+          maxSpeedKmh:     snapshot.maxSpeedKmh,
+          avgSpeedKmh:     snapshot.avgSpeedKmh,
+        );
+        debugPrint('[Firestore] ✅ Ride saved — ${snapshot.distanceKm.toStringAsFixed(3)} km, '
+            '${snapshot.elapsedSeconds}s, ${savePoints.length} points');
+      } catch (e) {
+        debugPrint('[Firestore] ❌ Save failed: $e');
+      }
+    } else {
+      debugPrint('[Firestore] ⚠️ No position available to save');
+    }
   }
 
   // ── Lifecycle hooks (called from TrackingScreen via AppLifecycleListener) ──

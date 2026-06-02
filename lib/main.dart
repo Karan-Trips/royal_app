@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:royal_app/core/providers/locale_provider.dart';
 import 'package:royal_app/core/router/app_router.dart';
 import 'package:royal_app/core/services/background_location_service.dart';
+import 'package:royal_app/core/services/firestore_service.dart';
 import 'package:royal_app/core/services/hive_service.dart';
 import 'package:royal_app/core/theme/app_theme.dart';
 import 'package:royal_app/core/theme/theme_provider.dart';
@@ -16,6 +17,8 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await HiveService.instance.init();
+  await FirestoreService.enableOfflinePersistence();
+  FirestoreService.instance.setDeviceId(HiveService.instance.deviceId);
   try {
     await BackgroundLocationService.instance.init();
   } catch (_) {
@@ -38,7 +41,7 @@ class MotoStackApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeNotifierProvider);
-    final locale    = ref.watch(localeNotifierProvider);
+    final locale = ref.watch(localeNotifierProvider);
 
     return ScreenUtilInit(
       designSize: const Size(390, 844),

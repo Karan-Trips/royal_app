@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /devices/{deviceId} {
+      allow read, write: if isValidDeviceId(deviceId);
+
+      match /rides/{rideId} {
+        allow read: if isValidDeviceId(deviceId);
+        allow create: if isValidDeviceId(deviceId) && isValidRide(request.resource.data);
+        allow update, delete: if false;
+      }
+
+      match /fuel_entries/{entryId} {
+        allow read: if isValidDeviceId(deviceId);
+        allow create: if isValidDeviceId(deviceId) && isValidFuelEntry(request.resource.data);
+        allow delete: if isValidDeviceId(deviceId);
+        allow update: if false;
+      }
+    }
+
+    function isValidDeviceId(id) {
+      return id is string && id.size() > 0 && id.size() <= 64;
+    }
+
+    function isValidRide(data) {
+      return data.keys().hasAll(['polyline', 'distanceKm', 'cost', 'durationSec', 'pointCount'])
+          && data.distanceKm is number && data.distanceKm >= 0
+          && data.cost is number && data.cost >= 0
+          && data.durationSec is number && data.durationSec >= 0
+          && data.pointCount is number && data.pointCount >= 1
+          && data.polyline is string && data.polyline.size() > 0;
+    }
+
+    function isValidFuelEntry(data) {
+      return data.keys().hasAll(['id', 'date', 'litresFilled', 'kmDriven', 'pricePerLitre'])
+          && data.litresFilled is number && data.litresFilled > 0
+          && data.kmDriven is number && data.kmDriven >= 0
+          && data.pricePerLitre is number && data.pricePerLitre > 0;
+    }
+  }
+}

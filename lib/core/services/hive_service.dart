@@ -13,6 +13,8 @@ const _kTotalDistance = 'total_distance';
 const _kTodayDistance = 'today_distance';
 const _kFuelWallet    = 'fuel_wallet';
 const _kLastSavedDate = 'last_saved_date';
+const _kDeviceId      = 'device_id';
+const _kHasAuthed     = 'has_authenticated_once';
 
 class HiveService {
   HiveService._();
@@ -32,6 +34,25 @@ class HiveService {
     _fuelLogBox   = await Hive.openBox<Map>(_kFuelLogBox);
     _historyBox   = await Hive.openBox<double>(_kHistoryBox);
   }
+
+  // ── Device ID (stable per install) ───────────────────────────────────────
+
+  String get deviceId {
+    var id = _statsMetaBox.get(_kDeviceId);
+    if (id == null || id.isEmpty) {
+      id = 'device_${DateTime.now().millisecondsSinceEpoch}';
+      _statsMetaBox.put(_kDeviceId, id);
+    }
+    return id;
+  }
+
+  // ── One-time auth flag ───────────────────────────────────────────────────
+
+  bool get hasAuthenticatedOnce =>
+      _statsMetaBox.get(_kHasAuthed, defaultValue: '') == 'true';
+
+  Future<void> setAuthenticatedOnce() =>
+      _statsMetaBox.put(_kHasAuthed, 'true');
 
   // ── Ride Stats ────────────────────────────────────────────────────────────
 

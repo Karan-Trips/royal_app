@@ -36,8 +36,7 @@ class HistoryScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh, color: Color(0xFFFF6B00), size: 20),
-            onPressed: () =>
-                ref.read(rideHistoryNotifierProvider.notifier).refresh(),
+            onPressed: () => ref.invalidate(rideHistoryNotifierProvider),
           ),
         ],
       ),
@@ -99,6 +98,7 @@ class _EmptyState extends StatelessWidget {
 
 class _BentoCard extends StatelessWidget {
   const _BentoCard({required this.ride});
+
   final RideEntity ride;
 
   @override
@@ -233,9 +233,9 @@ class _MiniStat extends StatelessWidget {
     required this.color,
   });
 
+  final Color color;
   final FaIconData icon;
   final String value;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {

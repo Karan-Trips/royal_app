@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_polyline_algorithm/google_polyline_algorithm.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:royal_app/core/services/firestore_service.dart';
 import 'package:royal_app/features/history/domain/i_ride_repository.dart';
 import 'package:royal_app/features/history/domain/ride_entity.dart';
 
@@ -25,14 +26,14 @@ extension _RideEntityX on RideEntity {
   };
 }
 
-RideEntity _fromDoc(DocumentSnapshot doc) {
-  final d = doc.data() as Map<String, dynamic>;
+RideEntity _fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
+  final d = doc.data()!;
   return RideEntity(
     id:              doc.id,
     encodedPolyline: d['polyline']     as String,
     distanceKm:      (d['distanceKm']  as num).toDouble(),
     cost:            (d['cost']        as num).toDouble(),
-    timestamp:       (d['timestamp']   as Timestamp).toDate(),
+    timestamp:       (d['timestamp']   as Timestamp?)?.toDate() ?? DateTime.now(),
     durationSeconds: (d['durationSec'] as num? ?? 0).toInt(),
     maxSpeedKmh:     (d['maxSpeedKmh'] as num? ?? 0).toDouble(),
     avgSpeedKmh:     (d['avgSpeedKmh'] as num? ?? 0).toDouble(),
@@ -57,7 +58,19 @@ class RideRepository implements IRideRepository {
   RideRepository._();
   static final instance = RideRepository._();
 
-  final _col = FirebaseFirestore.instance.collection('rides');
+  final _fs = FirestoreService.instance;
+
+  // ── Real-time stream ──────────────────────────────────────────────────────
+
+  /// Live stream of the last 50 rides, newest first.
+  /// Works offline — Firestore serves from cache when disconnected.
+  Stream<List<RideEntity>> watchRides() => _fs.rides
+      .orderBy('timestamp', descending: true)
+      .limit(50)
+      .snapshots()
+      .map((snap) => snap.docs.map(_fromDoc).toList());
+
+  // ── IRideRepository ───────────────────────────────────────────────────────
 
   @override
   Future<void> saveRide({
@@ -90,12 +103,12 @@ class RideRepository implements IRideRepository {
       endLng:          points.last.longitude,
     );
 
-    await _col.add(entity.toFirestore());
+    await _fs.rides.add(entity.toFirestore());
   }
 
   @override
   Future<List<RideEntity>> fetchRides() async {
-    final snap = await _col
+    final snap = await _fs.rides
         .orderBy('timestamp', descending: true)
         .limit(50)
         .get();

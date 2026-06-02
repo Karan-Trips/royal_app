@@ -63,6 +63,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '473791684393',
     projectId: 'motostack',
     storageBucket: 'motostack.firebasestorage.app',
-    iosBundleId: 'com.example.royalApp',
+    iosBundleId: 'com.royalapp.app',
   );
 }

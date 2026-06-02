@@ -1,6 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:royal_app/core/services/biometric_service.dart';
+import 'package:royal_app/core/services/hive_service.dart';
 
 part 'app_gate_provider.g.dart';
 
@@ -57,54 +58,53 @@ class AppGateNotifier extends _$AppGateNotifier {
   AppGateState build() => const AppGateState();
 
   /// Full gate sequence: biometric → GPS.
-  /// Safe to call multiple times (retry button).
+  /// Biometric is only asked on the very first cold launch.
+  /// Subsequent launches skip straight to GPS.
   Future<void> authenticate() async {
-    // Pre-fetch biometric label for UI display
-    final label = await _biometric.biometricLabel;
+    final hive = HiveService.instance;
+    final alreadyAuthed = hive.hasAuthenticatedOnce;
 
-    state = state.copyWith(
-      status: GateStatus.authenticating,
-      errorMessage: null,
-      biometricLabel: label,
-    );
+    if (!alreadyAuthed) {
+      // ── Step 1: Biometric (first launch only) ────────────────────────────
+      final label = await _biometric.biometricLabel;
+      state = state.copyWith(
+        status: GateStatus.authenticating,
+        errorMessage: null,
+        biometricLabel: label,
+      );
 
-    // ── Step 1: Biometric ──────────────────────────────────────────────────
-    final result = await _biometric.authenticate(
-      reason: 'Authenticate to access MotoStack',
-    );
+      final result = await _biometric.authenticate(
+        reason: 'Authenticate to access MotoStack',
+      );
 
-    switch (result) {
-      case AuthResult.success:
-        break; // continue to GPS
-
-      case AuthResult.notAvailable:
-        // No biometrics on device — skip straight to GPS.
-        break;
-
-      case AuthResult.cancelled:
-        state = state.copyWith(
-          status: GateStatus.authFailed,
-          errorMessage: 'Authentication cancelled. Tap to try again.',
-        );
-        return;
-
-      case AuthResult.lockedOut:
-        state = state.copyWith(
-          status: GateStatus.authFailed,
-          errorMessage: 'Too many failed attempts. Please try again later.',
-        );
-        return;
-
-      case AuthResult.error:
-        state = state.copyWith(
-          status: GateStatus.authFailed,
-          errorMessage: 'Authentication error. Please try again.',
-        );
-        return;
+      switch (result) {
+        case AuthResult.success:
+          await hive.setAuthenticatedOnce();
+        case AuthResult.notAvailable:
+          await hive.setAuthenticatedOnce(); // no biometrics — skip gate
+        case AuthResult.cancelled:
+          state = state.copyWith(
+            status: GateStatus.authFailed,
+            errorMessage: 'Authentication cancelled. Tap to try again.',
+          );
+          return;
+        case AuthResult.lockedOut:
+          state = state.copyWith(
+            status: GateStatus.authFailed,
+            errorMessage: 'Too many failed attempts. Please try again later.',
+          );
+          return;
+        case AuthResult.error:
+          state = state.copyWith(
+            status: GateStatus.authFailed,
+            errorMessage: 'Authentication error. Please try again.',
+          );
+          return;
+      }
     }
 
-    // ── Step 2: Location ───────────────────────────────────────────────────
-    state = state.copyWith(status: GateStatus.locating);
+    // ── Step 2: Location ─────────────────────────────────────────────────────
+    state = state.copyWith(status: GateStatus.locating, errorMessage: null);
 
     try {
       final serviceEnabled = await Geolocator.isLocationServiceEnabled();
